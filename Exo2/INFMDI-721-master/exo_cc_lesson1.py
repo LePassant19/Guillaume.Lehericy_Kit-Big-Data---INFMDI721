@@ -147,6 +147,17 @@ weather_data = {
 # - date (str): the date
 # - temp (float): the temperature in °celsius (not °kelvin)
 def extract_data(data):
+    result=[]
+    for city_name, city_weather_data in data.items():
+        country = city_weather_data['metadata']['country']
+        for releve in city_weather_data['weather_list']:
+            result.append({
+             'name': city_name,
+             'country': country,
+                'date': releve['dt_txt'],
+                'temp': releve ['main']['temp']-273.15
+            })
+
     return
 
 
@@ -201,7 +212,7 @@ class Lesson1Tests(unittest.TestCase):
             "Hetay uickqay rownbay oxfay"
         )
 
-"""
+
     def test_09_extract_data(self):
         result = extract_data(weather_data)
         self.assertEqual(
@@ -213,7 +224,7 @@ class Lesson1Tests(unittest.TestCase):
                 'temp': 16.0
             }
         )
-"""
+
 
 def run_tests():
     test_suite = unittest.makeSuite(Lesson1Tests)
